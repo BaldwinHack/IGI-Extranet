@@ -1,0 +1,60 @@
+name: IGI Extranet Frontend CI/CD
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    name: Validate Frontend
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Validate files exist
+        run: |
+          test -f index.html
+          test -f dashboard.html
+          test -f styles.css
+          test -f app.js
+          test -f dashboard.js
+          test -f sw.js
+          test -f manifest.json
+
+      - name: Optional Node setup
+        if: hashFiles('package.json') != ''
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies (if any)
+        if: hashFiles('package.json') != ''
+        run: npm install --ignore-scripts
+
+      - name: Run lint
+        if: hashFiles('package.json') != ''
+        run: npm run lint
+
+      - name: Build step
+        run: echo "Static frontend — no build required"
+
+  deploy:
+    name: Deploy Static Site
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: .
+          exclude_assets: '.github,node_modules'
