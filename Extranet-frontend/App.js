@@ -26,3 +26,7 @@ document.getElementById("loginForm").addEventListener("submit", (e) => {
   localStorage.setItem("igi_session", JSON.stringify(session));
   window.location.href = "dashboard.html";
 });
+
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("/sw.js").catch(() => {});
+}
