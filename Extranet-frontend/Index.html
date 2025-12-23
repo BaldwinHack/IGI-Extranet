@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>IGI Extranet | Secure Access</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="login-container">
+    <h1>IGI Extranet</h1>
+    <p class="subtitle">Authorized Access Only</p>
+
+    <form id="loginForm">
+      <input type="email" id="email" placeholder="Email" required />
+      <input type="password" id="password" placeholder="Password" required />
+      <button type="submit">Authenticate</button>
+    </form>
+
+    <div class="options">
+      <label><input type="checkbox" /> Remember Device</label>
+      <p id="status">Offline-Ready</p>
+    </div>
+
+    <footer>
+      <span>Security • Privacy • Status</span>
+    </footer>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
